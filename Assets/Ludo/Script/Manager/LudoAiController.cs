@@ -127,7 +127,7 @@ namespace Ludo
 
                 for (int j = 0; j < gameManager.allPlayerHomeController[i].allPlayerToken.Count; j++)
                 {
-                  //  Debug.Log(j);
+                    //  Debug.Log(j);
                     tokenDetails[j] = gameManager.allPlayerHomeController[i].allPlayerToken[j].myLastBoxIndex;
                 }
 
@@ -351,14 +351,14 @@ namespace Ludo
         public void BattleFinish()
         {
             Debug.LogError("Duplicate BattleFinish in the list:");
-            var duplicates = gameManager.allPlayerHomeController.GroupBy(x => x.OfflineScore()).Where(g => g.Count() > 1).SelectMany(g => g).ToList();
+            var duplicates = gameManager.allPlayerHomeController
+                .Where(x => x.playerInfoData.seatIndex != -1)  // Add this condition first
+                .GroupBy(x => x.OfflineScore())
+                .Where(g => g.Count() > 1)
+                .SelectMany(g => g)
+                .ToList();
 
-
-          /*  for (int i = 0; i < duplicates.Count; i++)
-            {
-                Debug.LogError("================== " + i + " || " + duplicates[i].playerInfoData.seatIndex + " || " + duplicates[i].playerInfoData.username);
-            }*/
-            Debug.Log("Duplicate elements in the list:");
+            Debug.Log("Duplicate elements in the list:" + duplicates.Count);
             foreach (var item in duplicates)
             {
                 Debug.Log(item.playerInfoData.seatIndex);
@@ -371,17 +371,23 @@ namespace Ludo
                 tieBreakerResponse = JsonConvert.DeserializeObject<TieBreakerResponse>(allResponse[15]);
                 tieBreakerResponse.data.userData = new List<UserData>();
 
-                for (int i = 0; i < ludoHomeControllers.Count; i++)
+                for (int i = 0; i < duplicates.Count; i++)
                 {
-                    if (ludoHomeControllers[i].playerInfoData.seatIndex != -1)
+                    Debug.LogError("SEAT INDEX " + duplicates[i].playerInfoData.seatIndex);
+
+                    for (int j = 0; j < duplicates[i].allPlayerToken.Count; j++)
+                    {
+                        Debug.LogError("myLastBoxIndex =>  " + duplicates[i].allPlayerToken[j].myLastBoxIndex);
+                    }
+                    if (duplicates[i].playerInfoData.seatIndex != -1)
                     {
                         UserData userData = new UserData();
-                        userData.seatIndex = ludoHomeControllers[i].playerInfoData.seatIndex;
+                        userData.seatIndex = duplicates[i].playerInfoData.seatIndex;
 
-                        ludoHomeControllers[i].allPlayerToken = ludoHomeControllers[i].allPlayerToken.OrderByDescending(controller => controller.myLastBoxIndex).ToList();
+                        duplicates[i].allPlayerToken = duplicates[i].allPlayerToken.OrderByDescending(controller => controller.myLastBoxIndex).ToList();
 
-                        userData.tokenIndex = ludoHomeControllers[i].allPlayerToken[0].tokenIndex;
-                        userData.furthestToken = ludoHomeControllers[i].allPlayerToken[0].myLastBoxIndex;
+                        userData.tokenIndex = duplicates[i].allPlayerToken[0].tokenIndex;
+                        userData.furthestToken = duplicates[i].allPlayerToken[0].myLastBoxIndex;
                         tieBreakerResponse.data.userData.Add(userData);
                     }
                 }
@@ -404,6 +410,7 @@ namespace Ludo
 
         public BattleFinishResponse battleFinishResponse;
 
+        public void FinalBattleFinishAI() => StartCoroutine(BattleFinishAI());
         IEnumerator BattleFinishAI()
         {
             battleFinishResponse = JsonConvert.DeserializeObject<BattleFinishResponse>(allResponse[11]);
@@ -415,7 +422,7 @@ namespace Ludo
                 if (gameManager.allPlayerHomeController[i].playerInfoData.seatIndex != -1)
                     ludoHomeControllers.Add(gameManager.allPlayerHomeController[i]);
 
-            ludoHomeControllers = ludoHomeControllers.OrderBy(controller => controller.OfflineScore()).ToList();
+            ludoHomeControllers = ludoHomeControllers.OrderByDescending(controller => controller.OfflineScore()).ToList();
 
             for (int i = 0; i < ludoHomeControllers.Count; i++)
             {

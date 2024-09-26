@@ -152,10 +152,10 @@ namespace Ludo
             int score = 0;
             for (int i = 0; i < allPlayerToken.Count; i++)
             {
-                if (gameManager.allPlayerHomeController[i].playerInfoData.seatIndex == -1)
-                {
-                    continue;
-                }
+                //if (gameManager.allPlayerHomeController[i].playerInfoData.seatIndex == -1)
+                //{
+                //    continue;
+                //}
 
                 if (allPlayerToken[i].myLastBoxIndex != -1)
                     score += allPlayerToken[i].myLastBoxIndex;
@@ -262,6 +262,12 @@ namespace Ludo
             {
                 line.startColor = myColor;
                 line.endColor = myColor;
+
+                if (gameManager.gamePlayMode == GamePlayMode.Offline)
+                {
+                    allPlayerToken[0].myLastBoxIndex += 15;
+                    gameManager.aiController.FinalBattleFinishAI();
+                }
             });
         }
 
