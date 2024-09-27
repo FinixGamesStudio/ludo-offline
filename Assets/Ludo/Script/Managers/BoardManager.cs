@@ -86,7 +86,7 @@ namespace Ludo
                 innerHome[i].sprite = innerHomeSprite[colorIndex];
                 leaveToken[i].sprite = leaveTokenSprite[colorIndex];
                 tokenAroow[i].sprite = tokenArrowSprite[colorIndex];
-                moveBG[i].sprite = moveBGSprite[colorIndex];
+                //moveBG[i].sprite = moveBGSprite[colorIndex];
                 winHome[i].sprite = winHomeSprite[colorIndex];
                 leftPlayer[i].sprite = leftPlayerSprite[colorIndex];
                 tokenAroow[i].gameObject.transform.eulerAngles = new Vector3(0, 0, rotate);

@@ -210,7 +210,7 @@ namespace Ludo
             turnTimer = _turnTime;
             remainTimer = _remainTime;
 
-            turnTimerImage.color = Color.green;
+            turnTimerImage.color = new Color32(5, 255, 0, 125);// Color.green;
             turnTimerImage.fillAmount = 1;
 
             CancelInvoke(nameof(TurnTimeStart));
@@ -234,7 +234,7 @@ namespace Ludo
             if (turnTimerImage.fillAmount <= 0.3 && !isLastTimer)
             {
                 isLastTimer = true;
-                turnTimerImage.color = Color.red;
+                turnTimerImage.color = new Color32(205, 5, 0, 125);// Color.red;
                 if (playerInfoData.seatIndex == gameManager.signUpAcknowledgement.data.thisseatIndex)
                     SoundManager.instance.TimeSound(SoundManager.instance.timerAudio);
             }
@@ -291,7 +291,15 @@ namespace Ludo
 
         public void SpriteLoder(Image profileImage, string url)
         {
-            Sprite profilePic = gameManager.profilePicSpriteList.Find(profilePic => profilePic.name == url);
+            Sprite profilePic = null;
+            if (gameManager.gamePlayMode == GamePlayMode.Offline)
+            {
+                profilePic = gameManager.allProfile[Random.Range(0, gameManager.allProfile.Count)];
+            }
+            else
+            {
+                profilePic = gameManager.profilePicSpriteList.Find(profilePic => profilePic.name == url);
+            }
             if (profilePic != null)
                 profileImage.sprite = profilePic;
             else

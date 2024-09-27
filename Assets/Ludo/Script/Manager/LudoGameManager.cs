@@ -23,6 +23,9 @@ namespace Ludo
 
     public class LudoGameManager : MonoBehaviour
     {
+        [Header("ALL SPRITE ")]
+        public List<Sprite> allProfile = new List<Sprite>();
+
         [Header("SING UP DATA")]
         public SignUpRequestSDKData signUpRequestSDKData;
 
@@ -603,7 +606,7 @@ namespace Ludo
 
         public void SetUserTurnStartData(string responseJsonString)
         {
-           tokenController.CoockieManage();
+            tokenController.CoockieManage();
             try
             {
                 userTurnStartResponseData = JsonConvert.DeserializeObject<UserTurnStartResponse>(responseJsonString);
@@ -756,7 +759,7 @@ namespace Ludo
         {
 
 #if UNITY_EDITOR
-                UnityEditor.EditorApplication.isPlaying = false;
+            UnityEditor.EditorApplication.isPlaying = false;
 #endif
 #if UNITY_ANDROID
             Application.Quit();
