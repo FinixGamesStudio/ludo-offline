@@ -74,6 +74,9 @@ namespace Ludo
                     openSettingButton.SetActive(true);
                     gameManager.uiManager.exitPopUpController.OnButtonClicked("Open");
                     break;
+                case "Privacy-Policy":
+                    Application.OpenURL("https://finixgamesstudio.com/privacy-policy/");
+                    break;
                 default:
                     break;
             }

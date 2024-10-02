@@ -27,7 +27,7 @@ namespace Ludo
 
         //public Text serverTopToastText;
         //public Text serverCenterToastText;
-        public TextMeshProUGUI serverCommonPopupTitle;
+        public Text serverCommonPopupTitle;
         public TextMeshProUGUI serverCommonPopupMessage;
 
         [Header("==========================================")]

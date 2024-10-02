@@ -13,9 +13,10 @@ namespace Ludo
         public GameObject crown;
         public GameObject boxImage;
 
-        internal void SetUserProfile(string url)
+        internal void SetUserProfile(Sprite profile)
         {
-            LudoGameManager.instace.uiManager.SpriteLoder(profilePic, url);
+            profilePic.sprite = profile;
+            //LudoGameManager.instace.uiManager.SpriteLoder(profilePic, url);
         }
 
     }
