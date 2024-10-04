@@ -120,7 +120,7 @@ namespace Ludo
 
             for (int j = 0; j < allPlayerHomeController.Count; j++)
             {
-                Debug.LogError(" || staticSeatIndex || " + allPlayerHomeController[j].staticSeatIndex);
+                Debug.Log(" || staticSeatIndex || " + allPlayerHomeController[j].staticSeatIndex);
 
                 allPlayerHomeController[j].staticSeatIndex = -1;
                 allPlayerHomeController[j].playerInfoData = new PlayerInfoData();
@@ -497,7 +497,7 @@ namespace Ludo
                 {
                     if (allPlayerHomeController[j].staticSeatIndex == joinTableResponse.data.playerInfo[i].seatIndex)
                     {
-                        Debug.LogError(" || staticSeatIndex || " + allPlayerHomeController[i].staticSeatIndex);
+                        Debug.Log(" || staticSeatIndex || " + allPlayerHomeController[i].staticSeatIndex);
                         allPlayerHomeController[j].playerInfoData = joinTableResponse.data.playerInfo[i];
                         allPlayerHomeController[j].SetActiveAllToken();
                         allPlayerHomeController[j].innerHome.SetActive(true);

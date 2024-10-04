@@ -136,7 +136,7 @@ namespace Ludo
 
         private void Awake()
         {
-            Debug.LogError($"---------- || {name} || ----------");
+            Debug.Log($"---------- || {name} || ----------");
             myLastBoxIndex = -1;
             if (!gameManager.signUpRequestSDKData.gameModeName.Equals("CLASSIC"))
             {

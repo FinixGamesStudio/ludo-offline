@@ -143,7 +143,7 @@ namespace Ludo
 
             if (movesLeft <= 0)
             {
-                Debug.LogError("------------");
+                Debug.Log("------------");
                 //Battle Win
                 if (!gameManager.signUpRequestSDKData.gameModeName.Equals("NUMBER"))
                 {
@@ -219,7 +219,7 @@ namespace Ludo
             //Debug.LogError("======> 2 " + (allTokenThatCanMove.Count > 0 && allToken.Count < 4));
 
             if (allTokenThatCanMove.Count > 0)
-                Debug.LogError("======> allTokenThatCanMove " + allTokenThatCanMove[UnityEngine.Random.Range(0, allTokenThatCanMove.Count)].tokenIndex);
+                Debug.Log("======> allTokenThatCanMove " + allTokenThatCanMove[UnityEngine.Random.Range(0, allTokenThatCanMove.Count)].tokenIndex);
 
             if (allToken.Count == 4 && userTurnStartResponse.data.diceValue != 6)
                 AiUserTurn();
@@ -234,7 +234,7 @@ namespace Ludo
                     AiUserTurn();
             else
             {
-                Debug.LogError("========== HERE ===>>>>>>>>>>");
+                Debug.Log("========== HERE ===>>>>>>>>>>");
             }
 
         }
@@ -245,7 +245,7 @@ namespace Ludo
             moveTokenResponse = JsonConvert.DeserializeObject<MoveTokenResponse>(allResponse[5]);
             moveTokenResponse.data.tokenMove = tokenIndex;
             moveTokenResponse.data.movementValue = userTurnStartResponse.data.diceValue;
-            Debug.LogError("  diceValue =====>  " + userTurnStartResponse.data.diceValue);
+            Debug.Log("  diceValue =====>  " + userTurnStartResponse.data.diceValue);
             LudoGameManager.instace.socketEvnetReceiver.ReciveData(JsonConvert.SerializeObject(moveTokenResponse));
             yield return new WaitForSeconds(1f);
         }
@@ -299,11 +299,11 @@ namespace Ludo
             for (int i = 0; i < gameManager.allPlayerHomeController.Count; i++)
                 gameManager.allPlayerHomeController[i].UpdateUserScore(0);
 
-            Debug.LogError("1 ==========> " + boxProperties.name);
+            Debug.Log("1 ==========> " + boxProperties.name);
             if (boxProperties.allTokenInSameBox.Count == 2 && boxProperties.boxType != BoxType.Star)
             {
 
-                Debug.LogError("2 ==========>");
+                Debug.Log("2 ==========>");
                 if (boxProperties.allTokenInSameBox[0].homeController.staticSeatIndex != boxProperties.allTokenInSameBox[1].homeController.staticSeatIndex)
                 {
                     boxProperties.allTokenInSameBox[0].KillMove();
@@ -350,7 +350,7 @@ namespace Ludo
 
         public void BattleFinish()
         {
-            Debug.LogError("Duplicate BattleFinish in the list:");
+            Debug.Log("Duplicate BattleFinish in the list:");
             var duplicates = gameManager.allPlayerHomeController
                 .Where(x => x.playerInfoData.seatIndex != -1)  // Add this condition first
                 .GroupBy(x => x.OfflineScore())
@@ -367,17 +367,17 @@ namespace Ludo
 
             if (duplicates.Count == 2)
             {
-                Debug.LogError("IF");
+                Debug.Log("IF");
                 tieBreakerResponse = JsonConvert.DeserializeObject<TieBreakerResponse>(allResponse[15]);
                 tieBreakerResponse.data.userData = new List<UserData>();
 
                 for (int i = 0; i < duplicates.Count; i++)
                 {
-                    Debug.LogError("SEAT INDEX " + duplicates[i].playerInfoData.seatIndex);
+                    Debug.Log("SEAT INDEX " + duplicates[i].playerInfoData.seatIndex);
 
                     for (int j = 0; j < duplicates[i].allPlayerToken.Count; j++)
                     {
-                        Debug.LogError("myLastBoxIndex =>  " + duplicates[i].allPlayerToken[j].myLastBoxIndex);
+                        Debug.Log("myLastBoxIndex =>  " + duplicates[i].allPlayerToken[j].myLastBoxIndex);
                     }
                     if (duplicates[i].playerInfoData.seatIndex != -1)
                     {
@@ -400,7 +400,7 @@ namespace Ludo
             }
             else
             {
-                Debug.LogError("ELSE");
+                Debug.Log("ELSE");
 
                 StartCoroutine(BattleFinishAI());
             }
@@ -433,6 +433,7 @@ namespace Ludo
                     responsePlayer.userId = ludoHomeControllers[i].playerInfoData.userId;
                     responsePlayer.avatar = ludoHomeControllers[i].playerInfoData.userProfile;
                     responsePlayer.score = ludoHomeControllers[i].OfflineScore();
+                    responsePlayer.seatIndex = ludoHomeControllers[i].staticSeatIndex;
 
                     if (i == 0)
                         responsePlayer.winType = "win";
