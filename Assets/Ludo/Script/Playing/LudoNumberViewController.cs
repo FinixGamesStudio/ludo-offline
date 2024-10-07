@@ -38,10 +38,11 @@ namespace Ludo
         {
             disableBox = allMovesObjects.Count - leftMoves;
             allMovesObjects[disableBox].boxImage.sprite = currentMovesSprite;
+            allMovesObjects[disableBox].numberText.color = Color.black;
             for (int i = 0; i < disableBox; i++)
             {
                 allMovesObjects[i].boxImage.sprite = disableMovesSprite;
-                allMovesObjects[i].numberText.color = Color.white;
+                allMovesObjects[i].numberText.color = Color.gray;
             }
         }
     }

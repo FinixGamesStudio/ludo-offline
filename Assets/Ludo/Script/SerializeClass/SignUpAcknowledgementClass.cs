@@ -51,6 +51,8 @@ namespace Ludo
             public int highestToken;
             public int remainingTimer;
             public string userProfile;
+            public bool isBot;
+            public int indexOfAvatar;
             public PlayerInfoData()
             {
                 seatIndex = -1;

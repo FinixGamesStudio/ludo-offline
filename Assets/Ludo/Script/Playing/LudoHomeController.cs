@@ -188,7 +188,7 @@ namespace Ludo
 
         public void UpdateDiceValue(int diceValue) => diceNumberText.text = diceValue.ToString();
 
-        public void UpdateUserProfile(string profileURL) => SpriteLoder(userImage, profileURL);
+        public void UpdateUserProfile(string profileURL, int indexOfAvatar) => SpriteLoder(userImage, profileURL, indexOfAvatar);
 
         public void HideAllToken()
         {
@@ -289,12 +289,12 @@ namespace Ludo
                 StartCoroutine(WinnerLineAnimation());
         }
 
-        public void SpriteLoder(Image profileImage, string url)
+        public void SpriteLoder(Image profileImage, string url, int avatarIndex)
         {
             Sprite profilePic = null;
             if (gameManager.gamePlayMode == GamePlayMode.Offline)
             {
-                profilePic = gameManager.allProfile[Random.Range(0, gameManager.allProfile.Count)];
+                profilePic = gameManager.allProfile[avatarIndex];
             }
             else
             {

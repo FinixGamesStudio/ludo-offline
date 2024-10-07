@@ -128,7 +128,7 @@ namespace Ludo
                 allPlayerHomeController[j].HideAllToken();
 
                 allPlayerHomeController[j].innerHome.SetActive(false);
-                allPlayerHomeController[j].UpdateUserProfile("");
+                allPlayerHomeController[j].UpdateUserProfile("", 0);
 
                 allPlayerHomeController[j].UpdateUserName();
                 allPlayerHomeController[j].TurnMissedCouter(0);
@@ -224,7 +224,7 @@ namespace Ludo
                                         allPlayerHomeController[j].playerInfoData = signUpAcknowledgement.data.playerInfo[i];
                                         allPlayerHomeController[j].SetActiveAllToken();
                                         allPlayerHomeController[j].innerHome.SetActive(true);
-                                        allPlayerHomeController[j].UpdateUserProfile(signUpAcknowledgement.data.playerInfo[i].userProfile);
+                                        //allPlayerHomeController[j].UpdateUserProfile(signUpAcknowledgement.data.playerInfo[i].userProfile);
                                         allPlayerHomeController[j].UpdateUserName();
                                         //allPlayerHomeController[j].GameModeSetUp();
                                         allPlayerHomeController[j].TurnMissedCouter(signUpAcknowledgement.data.playerInfo[i].missedTurnCount);
@@ -501,7 +501,7 @@ namespace Ludo
                         allPlayerHomeController[j].playerInfoData = joinTableResponse.data.playerInfo[i];
                         allPlayerHomeController[j].SetActiveAllToken();
                         allPlayerHomeController[j].innerHome.SetActive(true);
-                        allPlayerHomeController[j].UpdateUserProfile(joinTableResponse.data.playerInfo[i].userProfile);
+                        allPlayerHomeController[j].UpdateUserProfile(joinTableResponse.data.playerInfo[i].userProfile, joinTableResponse.data.playerInfo[i].indexOfAvatar);
                     }
                     allPlayerHomeController[j].UpdateUserName();
 
